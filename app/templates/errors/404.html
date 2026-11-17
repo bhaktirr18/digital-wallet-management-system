@@ -1,0 +1,22 @@
+
+{% extends "base.html" %}
+
+{% block title %}Page Not Found | WalletX{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-heading">
+            <span class="eyebrow">ERROR 404</span>
+            <h1>Page not found</h1>
+            <p>The page you're looking for doesn't exist or may have been moved.</p>
+        </div>
+
+        <a href="{{ url_for('dashboard.index') if current_user.is_authenticated else url_for('auth.login') }}"
+           class="primary-button"
+           style="display: block; text-align: center; text-decoration: none;">
+            Return to WalletX
+        </a>
+    </div>
+</div>
+{% endblock %}

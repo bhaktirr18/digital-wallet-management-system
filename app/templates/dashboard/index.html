@@ -1,0 +1,51 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard | WalletX{% endblock %}
+
+{% block content %}
+<section class="dashboard-header">
+    <div>
+        <span class="eyebrow">YOUR FINANCIAL OVERVIEW</span>
+        <h1>Welcome, {{ user.full_name }}!</h1>
+        <p>Here's an overview of your digital wallet.</p>
+    </div>
+</section>
+
+<section class="balance-card">
+    <div class="balance-label">Available Balance</div>
+
+    <div class="balance-amount">
+        ₹{{ "%.2f"|format(wallet.balance_paise / 100) }}
+    </div>
+
+    <div class="balance-footer">
+        <span>WalletX Account</span>
+        <span>{{ wallet.currency }}</span>
+    </div>
+</section>
+
+<section class="quick-actions">
+    <h2>Quick Actions</h2>
+
+    <div class="action-grid">
+        <a href="{{ url_for('wallet.deposit') }}" class="action-card">
+            <span class="action-icon">＋</span>
+            <h3>Add Money</h3>
+            <p>Deposit demo funds</p>
+        </a>
+
+        <a href="{{ url_for('wallet.transfer') }}" class="action-card">
+            <span class="action-icon">↗</span>
+            <h3>Transfer</h3>
+            <p>Send money to users</p>
+        </a>
+
+        <a href="{{ url_for('wallet.history') }}" class="action-card">
+            <span class="action-icon">↻</span>
+            <h3>Transactions</h3>
+            <p>View your activity</p>
+        </a>
+    </div>
+</section>
+{% endblock %}

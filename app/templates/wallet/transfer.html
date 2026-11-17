@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Transfer Money | WalletX{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="page-heading">
+        <span class="eyebrow">WALLET MANAGEMENT</span>
+        <h1>Transfer Money</h1>
+        <p>Send money to another WalletX user.</p>
+    </div>
+
+    <div class="form-card">
+        <div class="form-card-heading">
+            <h2>New Transfer</h2>
+            <p>Enter the recipient's details below.</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('wallet.transfer') }}">
+            <input type="hidden" name="csrf_token"
+                   value="{{ csrf_token() }}">
+
+            <input type="hidden" name="idempotency_key"
+                   value="{{ idempotency_key }}">
+
+            <div class="form-group">
+                <label for="recipient_email">Recipient Email</label>
+                <input
+                    type="email"
+                    id="recipient_email"
+                    name="recipient_email"
+                    placeholder="recipient@example.com"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="amount">Amount (₹)</label>
+                <input
+                    type="number"
+                    id="amount"
+                    name="amount"
+                    placeholder="Enter amount"
+                    min="0.01"
+                    step="0.01"
+                    required
+                >
+            </div>
+
+            <div class="demo-notice">
+                <strong>Before you transfer</strong>
+                <p>Check the recipient's email and amount carefully. This is a simulated wallet transfer, not a real payment.</p>
+            </div>
+
+            <button type="submit" class="primary-button">
+                Transfer Money
+            </button>
+        </form>
+
+        <a href="{{ url_for('dashboard.index') }}" class="back-link">
+            ← Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

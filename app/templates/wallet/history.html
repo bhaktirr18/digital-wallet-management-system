@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Transaction History | WalletX{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="page-heading">
+        <span class="eyebrow">ACCOUNT ACTIVITY</span>
+        <h1>Transaction History</h1>
+        <p>Review your wallet deposits and transfers.</p>
+    </div>
+
+    <div class="form-card history-card">
+        <div class="form-card-heading">
+            <h2>Recent Transactions</h2>
+            <p>Your wallet activity, sorted from newest to oldest.</p>
+        </div>
+
+        {% if transactions %}
+            <div class="table-responsive">
+                <table class="transaction-table">
+                    <thead>
+                        <tr>
+                            <th>Transaction</th>
+                            <th>Amount</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for transaction in transactions %}
+                            <tr>
+                                <td>
+                                    {% if transaction.transaction_type == "deposit" %}
+                                        <span class="transaction-type deposit-type">
+                                            Deposit
+                                        </span>
+                                    {% elif transaction.sender_wallet_id == current_user.wallet.id %}
+                                        <span class="transaction-type sent-type">
+                                            Sent
+                                        </span>
+                                    {% else %}
+                                        <span class="transaction-type received-type">
+                                            Received
+                                        </span>
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    ₹{{ "%.2f"|format(transaction.amount_paise / 100) }}
+                                </td>
+
+                                <td>
+                                    {{ transaction.description or "—" }}
+                                </td>
+
+                                <td>
+                                    {{ transaction.created_at.strftime("%d %b %Y, %I:%M %p") }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">↻</div>
+                <h3>No transactions yet</h3>
+                <p>Your deposits and transfers will appear here.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <a href="{{ url_for('dashboard.index') }}" class="back-link">
+        ← Back to Dashboard
+    </a>
+</div>
+{% endblock %}

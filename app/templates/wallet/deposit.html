@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Add Money | WalletX{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="page-heading">
+        <span class="eyebrow">WALLET MANAGEMENT</span>
+        <h1>Add Money</h1>
+        <p>Add demo funds to your WalletX account.</p>
+    </div>
+
+    <div class="form-card">
+        <div class="form-card-heading">
+            <h2>Deposit Funds</h2>
+            <p>Enter the amount you want to add.</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('wallet.deposit') }}">
+            <input type="hidden" name="csrf_token"
+                   value="{{ csrf_token() }}">
+
+            <input type="hidden" name="idempotency_key"
+                   value="{{ idempotency_key }}">
+
+            <div class="form-group">
+                <label for="amount">Amount (₹)</label>
+                <input
+                    type="number"
+                    id="amount"
+                    name="amount"
+                    placeholder="Enter amount"
+                    min="0.01"
+                    step="0.01"
+                    required
+                >
+            </div>
+
+            <div class="demo-notice">
+                <strong>Demo transaction</strong>
+                <p>This feature adds simulated funds. No real money or bank account is involved.</p>
+            </div>
+
+            <button type="submit" class="primary-button">
+                Add Money
+            </button>
+        </form>
+
+        <a href="{{ url_for('dashboard.index') }}" class="back-link">
+            ← Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

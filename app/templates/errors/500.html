@@ -1,0 +1,22 @@
+
+{% extends "base.html" %}
+
+{% block title %}Server Error | WalletX{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-heading">
+            <span class="eyebrow">ERROR 500</span>
+            <h1>Something went wrong</h1>
+            <p>We're sorry, but an unexpected server error occurred. Please try again later.</p>
+        </div>
+
+        <a href="{{ url_for('dashboard.index') if current_user.is_authenticated else url_for('auth.login') }}"
+           class="primary-button"
+           style="display: block; text-align: center; text-decoration: none;">
+            Return to WalletX
+        </a>
+    </div>
+</div>
+{% endblock %}
